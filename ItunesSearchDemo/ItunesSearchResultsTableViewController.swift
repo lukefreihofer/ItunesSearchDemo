@@ -12,9 +12,7 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     
     
     var results : [Result] = []
-    var timestamp : Date = Date()
     let placeholderText = "Search iTunes Music Store"
-    let minTime = 1.5
     let cellHeight = 100
     let searchController = UISearchController(searchResultsController: nil)
     var searchTask : DispatchWorkItem?
@@ -36,10 +34,10 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     }
     
     func getItunesSearchResults() {
-        
-//        if Date().timeIntervalSince(timestamp) > minTime {
-//            timestamp = Date()
-            if let query = searchController.searchBar.text {
+        if let query = searchController.searchBar.text {
+            if query.isEmpty {
+                clearAndRefresh()
+            } else {
                 NetworkManager.shared.searchItunes(searchTerms: query) { result in
                     DispatchQueue.main.async {
                         self.results.removeAll()
@@ -48,13 +46,16 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
                     }
                 }
             }
-//        }
+        }
     }
     
     
+    func clearAndRefresh() {
+        self.results.removeAll()
+        tableView.reloadData()
+    }
+    
     //MARK: - SearchResultsUpdating
-    
-    
     func updateSearchResults(for searchController: UISearchController) {
         delaySearchCall()
     }
@@ -94,6 +95,10 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         getItunesSearchResults()
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        clearAndRefresh()
+    }
+    
     func delaySearchCall() {
         
         self.searchTask?.cancel()
@@ -103,7 +108,7 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         }
         self.searchTask = task
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: self.searchTask!)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75, execute: self.searchTask!)
     }
 
 }
