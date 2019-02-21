@@ -15,7 +15,9 @@ class NetworkManager {
 
     func searchItunes(searchTerms : String, completion : @escaping (ItunesSearchResults) -> ()) {
         
-        guard let searchUrl = URL(string: searchAPI + searchTerms) else { return }
+        let urlstring = searchAPI + searchTerms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        print(urlstring)
+        guard let searchUrl = URL(string: urlstring) else { return }
         
         URLSession.shared.dataTask(with: searchUrl) {(data, response, error) in
             

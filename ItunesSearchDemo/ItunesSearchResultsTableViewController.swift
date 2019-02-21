@@ -14,9 +14,10 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     var results : [Result] = []
     var timestamp : Date = Date()
     let placeholderText = "Search iTunes Music Store"
-    let minTime = 0.1
+    let minTime = 1.5
     let cellHeight = 100
     let searchController = UISearchController(searchResultsController: nil)
+    var searchTask : DispatchWorkItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +36,9 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     }
     
     func getItunesSearchResults() {
-        if Date().timeIntervalSince(timestamp) > minTime {
-            timestamp = Date()
+        
+//        if Date().timeIntervalSince(timestamp) > minTime {
+//            timestamp = Date()
             if let query = searchController.searchBar.text {
                 NetworkManager.shared.searchItunes(searchTerms: query) { result in
                     DispatchQueue.main.async {
@@ -46,14 +48,15 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
                     }
                 }
             }
-        }
+//        }
     }
     
     
     //MARK: - SearchResultsUpdating
     
+    
     func updateSearchResults(for searchController: UISearchController) {
-        getItunesSearchResults()
+        delaySearchCall()
     }
     
     
@@ -91,6 +94,17 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         getItunesSearchResults()
     }
     
+    func delaySearchCall() {
+        
+        self.searchTask?.cancel()
+        
+        let task = DispatchWorkItem { [weak self] in
+            self?.getItunesSearchResults()
+        }
+        self.searchTask = task
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: self.searchTask!)
+    }
 
 }
 
