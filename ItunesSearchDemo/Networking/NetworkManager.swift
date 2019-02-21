@@ -11,7 +11,7 @@ import Foundation
 class NetworkManager {
 
     static let shared = NetworkManager()
-    private let searchAPI = "https://itunes.apple.com/search?term="
+    private let searchAPI = "https://itunes.apple.com/search?limit=25&term="
 
     func searchItunes(searchTerms : String, completion : @escaping (ItunesSearchResults) -> ()) {
         

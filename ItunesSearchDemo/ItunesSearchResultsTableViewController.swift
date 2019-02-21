@@ -13,6 +13,7 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     
     var results : [Result] = []
     let placeholderText = "Search iTunes Music Store"
+    let detailsSegueName = "resultDetailsSegue"
     let cellHeight = 100
     let searchController = UISearchController(searchResultsController: nil)
     var searchTask : DispatchWorkItem?
@@ -20,8 +21,7 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        
-        
+        self.definesPresentationContext = true
     }
     
     func setupSearchController() {
@@ -60,8 +60,6 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         delaySearchCall()
     }
     
-    
-    
     //MARK: - TableViewDatasource
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -84,7 +82,19 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
     
     //MARK: - TableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        self.performSegue(withIdentifier: detailsSegueName, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == detailsSegueName {
+            let vc = segue.destination as! ItunesSearchResultsDetailsViewController
+            let indexPath = self.tableView.indexPathForSelectedRow!
+            let searchResult = results[indexPath.row]
+            vc.searchResult = searchResult
+            
+            self.tableView.deselectRow(at: indexPath, animated: false)
+            self.searchController.searchBar.endEditing(true)
+        }
     }
     
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
