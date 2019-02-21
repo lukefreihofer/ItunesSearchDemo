@@ -44,7 +44,7 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
                         if result.results!.isEmpty {
                             self.addNoResultsFoundLabel()
                         } else {
-                            self.tableView.backgroundView = nil
+                            self.removeNoResultsLabel()
                             self.results.append(contentsOf: result.results!)
                         }
                         self.tableView.reloadData()
@@ -54,12 +54,18 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         }
     }
     
+    func removeNoResultsLabel() {
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.backgroundView = nil
+    }
+    
     func addNoResultsFoundLabel() {
         let rect = CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: self.tableView.bounds.height)
         let noResults = UILabel(frame: rect)
         noResults.text = "No Results Found"
-        noResults.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+        noResults.textColor = UIColor.gray
         noResults.textAlignment = .center
+        self.tableView.separatorStyle = .none
         self.tableView.backgroundView = noResults
     }
     
