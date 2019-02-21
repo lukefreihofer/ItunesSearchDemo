@@ -38,10 +38,15 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
             if query.isEmpty {
                 clearAndRefresh()
             } else {
-                NetworkManager.shared.searchItunes(searchTerms: query) { result in
+                NetworkManager().searchItunes(searchTerms: query) { result in
                     DispatchQueue.main.async {
                         self.results.removeAll()
-                        self.results.append(contentsOf: result.results!)
+                        if result.results!.isEmpty {
+                            self.addNoResultsFoundLabel()
+                        } else {
+                            self.tableView.backgroundView = nil
+                            self.results.append(contentsOf: result.results!)
+                        }
                         self.tableView.reloadData()
                     }
                 }
@@ -49,10 +54,31 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         }
     }
     
+    func addNoResultsFoundLabel() {
+        let rect = CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: self.tableView.bounds.height)
+        let noResults = UILabel(frame: rect)
+        noResults.text = "No Results Found"
+        noResults.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+        noResults.textAlignment = .center
+        self.tableView.backgroundView = noResults
+    }
+    
     
     func clearAndRefresh() {
         self.results.removeAll()
         tableView.reloadData()
+    }
+    
+    func delaySearchCall() {
+        
+        self.searchTask?.cancel()
+        
+        let task = DispatchWorkItem { [weak self] in
+            self?.getItunesSearchResults()
+        }
+        self.searchTask = task
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75, execute: self.searchTask!)
     }
     
     //MARK: - SearchResultsUpdating
@@ -85,18 +111,6 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         self.performSegue(withIdentifier: detailsSegueName, sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == detailsSegueName {
-            let vc = segue.destination as! ItunesSearchResultsDetailsViewController
-            let indexPath = self.tableView.indexPathForSelectedRow!
-            let searchResult = results[indexPath.row]
-            vc.searchResult = searchResult
-            
-            self.tableView.deselectRow(at: indexPath, animated: false)
-            self.searchController.searchBar.endEditing(true)
-        }
-    }
-    
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.searchController.searchBar.endEditing(true)
     }
@@ -109,16 +123,17 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         clearAndRefresh()
     }
     
-    func delaySearchCall() {
-        
-        self.searchTask?.cancel()
-        
-        let task = DispatchWorkItem { [weak self] in
-            self?.getItunesSearchResults()
+    //MARK: - Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == detailsSegueName {
+            let vc = segue.destination as! ItunesSearchResultsDetailsViewController
+            let indexPath = self.tableView.indexPathForSelectedRow!
+            let searchResult = results[indexPath.row]
+            vc.searchResult = searchResult
+            
+            self.tableView.deselectRow(at: indexPath, animated: false)
+            self.searchController.searchBar.endEditing(true)
         }
-        self.searchTask = task
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75, execute: self.searchTask!)
     }
 
 }
