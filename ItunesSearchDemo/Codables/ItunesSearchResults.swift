@@ -10,6 +10,7 @@ import Foundation
 
 enum WrapperType : String {
     case audiobook = "audiobook"
+    case featureMovie = "feature-movie"
     case track = "track"
 }
 
