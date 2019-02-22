@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Network Manager to easily call apis we may need
 class NetworkManager {
 
     static let shared = NetworkManager()

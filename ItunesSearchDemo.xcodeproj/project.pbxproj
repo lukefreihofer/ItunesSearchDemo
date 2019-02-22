@@ -21,6 +21,7 @@
 		A3055BAC221E3FA7000B946A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3055BAB221E3FA7000B946A /* NetworkManager.swift */; };
 		A3E9662B221F3F45002A8C3F /* ItunesSearchResultsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E9662A221F3F45002A8C3F /* ItunesSearchResultsDetailsViewController.swift */; };
 		A3E9662D221F6E71002A8C3F /* String+HTMLFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E9662C221F6E71002A8C3F /* String+HTMLFormat.swift */; };
+		A3E9662F221F86E8002A8C3F /* ViewController+Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E9662E221F86E8002A8C3F /* ViewController+Spinner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		A3055BAB221E3FA7000B946A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A3E9662A221F3F45002A8C3F /* ItunesSearchResultsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResultsDetailsViewController.swift; sourceTree = "<group>"; };
 		A3E9662C221F6E71002A8C3F /* String+HTMLFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMLFormat.swift"; sourceTree = "<group>"; };
+		A3E9662E221F86E8002A8C3F /* ViewController+Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Spinner.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			children = (
 				A3055BA9221E39BD000B946A /* ImageView+Downloader.swift */,
 				A3E9662C221F6E71002A8C3F /* String+HTMLFormat.swift */,
+				A3E9662E221F86E8002A8C3F /* ViewController+Spinner.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				A3055BA7221E355E000B946A /* ItunesSearchResultsTableViewCell.swift in Sources */,
 				A3E9662D221F6E71002A8C3F /* String+HTMLFormat.swift in Sources */,
 				A3E9662B221F3F45002A8C3F /* ItunesSearchResultsDetailsViewController.swift in Sources */,
+				A3E9662F221F86E8002A8C3F /* ViewController+Spinner.swift in Sources */,
 				A3055BAC221E3FA7000B946A /* NetworkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,6 +14,7 @@ class ItunesSearchResultsTableViewCell : UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
     
+    //Sets results model to the cell and populates the IBOutlets
     func setItunesResultModel(result : Result) {
         if let thumbnailUrl = result.artworkUrl100 {
             thumbnail.downloaded(from: thumbnailUrl)

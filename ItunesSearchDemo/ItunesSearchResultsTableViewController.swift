@@ -24,6 +24,7 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         self.definesPresentationContext = true
     }
     
+    //Creates the searchbar and sticks it on the tableview header
     func setupSearchController() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -33,13 +34,16 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         tableView.tableHeaderView = searchController.searchBar
     }
     
+    //Calls the itunes search api, or clears and reload the table if the textfield is empty
     func getItunesSearchResults() {
         if let query = searchController.searchBar.text {
             if query.isEmpty {
                 clearAndRefresh()
             } else {
+                self.showSpinner(onView: self.tableView)
                 NetworkManager().searchItunes(searchTerms: query) { result in
                     DispatchQueue.main.async {
+                        self.removeSpinner()
                         self.results.removeAll()
                         if result.results!.isEmpty {
                             self.addNoResultsFoundLabel()
@@ -54,11 +58,13 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         }
     }
     
+    // removes the label from the background if results exist
     func removeNoResultsLabel() {
         self.tableView.separatorStyle = .singleLine
         self.tableView.backgroundView = nil
     }
     
+    // adds a label to the background if the results come back empty
     func addNoResultsFoundLabel() {
         let rect = CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: self.tableView.bounds.height)
         let noResults = UILabel(frame: rect)
@@ -75,6 +81,9 @@ class ItunesSearchResultsTableViewController: UITableViewController, UISearchRes
         tableView.reloadData()
     }
     
+    //Only make an api call if typing has stopped for X amount of time
+    //iTunes API only lets free users use 20 calls per minute, and then increases the penalty time if you try and spam calls
+    //If this weren't an issue, I'd make the delay 0.5 seconds or a little lower, but 0.75 for this is necessary to not get locked out
     func delaySearchCall() {
         
         self.searchTask?.cancel()
