@@ -26,9 +26,7 @@ class ItunesSearchResultsDetailsViewController : UIViewController {
         super.viewDidLoad()
         
         //Makes the imageview into a circle
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
+        imageView.roundImageWithBorder()
         
         setResultModel(result: searchResult)
     }

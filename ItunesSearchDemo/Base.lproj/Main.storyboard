@@ -158,12 +158,10 @@
                             <constraint firstItem="INQ-RO-7le" firstAttribute="top" secondItem="5Xh-iJ-CEb" secondAttribute="bottom" constant="63" id="MCq-T4-7RY"/>
                             <constraint firstItem="5Xh-iJ-CEb" firstAttribute="leading" secondItem="JpI-Vo-SOs" secondAttribute="leading" id="R0Z-3r-wLU"/>
                             <constraint firstItem="INQ-RO-7le" firstAttribute="leading" secondItem="JpI-Vo-SOs" secondAttribute="leading" constant="17" id="TwN-m6-nMm"/>
-                            <constraint firstItem="JpI-Vo-SOs" firstAttribute="trailing" secondItem="Vbt-ec-0Qv" secondAttribute="trailing" constant="112.5" id="VKK-RX-ygi"/>
                             <constraint firstItem="50o-nM-7gG" firstAttribute="leading" secondItem="JpI-Vo-SOs" secondAttribute="leading" constant="16" id="VO6-nz-Xmn"/>
                             <constraint firstItem="AO3-Zh-YkT" firstAttribute="top" secondItem="ID1-EG-sZe" secondAttribute="bottom" constant="8" id="Z1H-vR-Gfy"/>
                             <constraint firstItem="3rz-aH-ARf" firstAttribute="leading" secondItem="JpI-Vo-SOs" secondAttribute="leading" constant="16" id="acT-TS-0gF"/>
                             <constraint firstItem="JpI-Vo-SOs" firstAttribute="trailing" secondItem="uHU-bg-fSd" secondAttribute="trailing" constant="16" id="ame-7J-T19"/>
-                            <constraint firstItem="Vbt-ec-0Qv" firstAttribute="leading" secondItem="JpI-Vo-SOs" secondAttribute="leading" constant="112.5" id="bCf-ON-dww"/>
                             <constraint firstItem="ID1-EG-sZe" firstAttribute="top" secondItem="uHU-bg-fSd" secondAttribute="bottom" constant="8" id="bgk-sa-O5Z"/>
                             <constraint firstItem="JpI-Vo-SOs" firstAttribute="bottom" secondItem="50o-nM-7gG" secondAttribute="bottom" constant="20" id="eNo-dw-wka"/>
                             <constraint firstItem="Vbt-ec-0Qv" firstAttribute="top" secondItem="JpI-Vo-SOs" secondAttribute="top" constant="30" id="hva-Zs-SOS"/>
